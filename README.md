@@ -1,5 +1,5 @@
 # SNJ - Satoru No Jinsei
-- [Gameplay](./gifs/gameplay.gif)
+![Gameplay](./gifs/gameplay.gif)
 ### About
 A game inspired by the Jujutsu Kaisen anime, based off of Gojo Satoru's character.
 I've been working on this game for a few weeks on and off to create a more consolidated project in terms of the various games I've made and improve my portfolio. 
