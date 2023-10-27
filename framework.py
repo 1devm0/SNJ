@@ -73,15 +73,14 @@ def get_mouse_scaled_pos(win_size, surf_size):
 
 
 class pge_circle:
-    def __init__(self, surface, color, pos, radius):
-        self.surface = surface
+    def __init__(self, color, pos, radius):
         self.color = color
         self.pos = pos
         self.radius = radius
 
-    def draw(self):
-        pg.draw.circle(self.surface, (255, 255, 255), self.pos, self.radius + 1)
-        pg.draw.circle(self.surface, self.color, self.pos, self.radius)  
+    def draw(self, surf, scroll):
+        pg.draw.circle(surf, (255, 255, 255), (self.pos[0] - scroll[0], self.pos[1] - scroll[1]), self.radius + 1)
+        pg.draw.circle(surf, self.color, (self.pos[0] - scroll[0], self.pos[1] - scroll[1]), self.radius)  
 
     def collision(self, otherCircle):
         xDif = self.pos[0] - otherCircle.pos[0]
@@ -231,44 +230,46 @@ class pge_rigidbody2d:
         }
         self.vel = [0, 0]
 
-    def update(self, move_speed, dt, tiles=None):
-        self.vel = [0, 0]
-
-        self.vel[0] += move_speed * dt * (self.movement["right"] - self.movement["left"]) 
-        self.vel[1] += move_speed * dt * (self.movement["down"] - self.movement["up"]) 
+    def update(self, move_speed, tiles=None):
+        movement = [move_speed * (self.movement["right"] - self.movement["left"]),  move_speed * (self.movement["down"] - self.movement["up"])]
+        f_movement = (movement[0] + self.vel[0], movement[1] + self.vel[1])
 
         collision_types = {
-            "top"     : False,
-            "bottom"  : False,
-            "right"   : False,
-            "left"    : False
+            "right" : 0,
+            "left" : 0,
+            "up" : 0,
+            "down" : 0
         }
 
-        self.rect.x += self.vel[0]
+        self.rect.x += f_movement[0]
         if tiles != None:
-            hit_list = [tile for tile in tiles if self.rect.colliderect(tile)]
-            for tile in hit_list:
-                if self.vel[0] > 0:
-                    self.rect.right = tile.left 
-                    collision_types["right"] = True
+            for tile in tiles:
+                if tile.colliderect(self.rect):
+                    if f_movement[0] > 0:
+                        self.rect.right = tile.left 
+                        collision_types["right"] = True
 
-                elif self.vel[0] < 0:
-                    self.rect.left = tile.right
-                    collision_types["left"] = True
+                    if f_movement[0] < 0:
+                        self.rect.left = tile.right
+                        collision_types["left"] = True
 
-        self.rect.y += self.vel[1]
+        self.rect.y += f_movement[1]
         if tiles != None:
-            hit_list = [tile for tile in tiles if self.rect.colliderect(tile)]
-            for tile in hit_list:
-                if self.vel[1] > 0:
-                    self.rect.bottom = tile.top
-                    collision_types["bottom"] = True
+            for tile in tiles:
+                if tile.colliderect(self.rect):
+                    if f_movement[1] > 0:
+                        self.rect.bottom = tile.top 
+                        collision_types["down"] = True
 
-                if self.vel[1] < 0:
-                    self.rect.top = tile.bottom 
-                    collision_types["top"] = True
-            
+                    if f_movement[1] < 0:
+                        self.rect.top = tile.bottom
+                        collision_types["up"] = True
+           
+        self.vel[1] = min(8, self.vel[1] + 0.5)
         self.collision = collision_types
+
+        if self.collision["down"] or self.collision["up"]:
+            self.vel[1] = 0
 
     def dbg_draw(self, display, offset):
         new_rect = pg.Rect(self.rect.x - offset[0], self.rect.y - offset[1], self.rect.w, self.rect.h)
