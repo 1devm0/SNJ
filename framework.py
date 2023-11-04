@@ -139,6 +139,7 @@ PLAYER_SPAWN_POS = (130, 656)
 class pge_anim_img:
     def __init__(self, size : tuple, img_folder, colorkey, number_of_states, states_list, framerate=30, scale=0):
         self.animated_imgs = {}
+        self.colorkey = colorkey
         for i in range(0, number_of_states):
             # adding the key into the dictionary
             self.animated_imgs[states_list[i][0]] = []
@@ -146,7 +147,6 @@ class pge_anim_img:
             for n in range(0, states_list[i][1]):
                 # load from folder, i.e res/player/idle/0.png
                 img = pg.image.load(img_folder + states_list[i][0] + "/" + str(n) + ".png").convert_alpha()
-                img.set_colorkey(colorkey)
                 if scale:
                     img = pg.transform.scale(img, size)
                 ## adding final modified image to the hash table
@@ -188,6 +188,7 @@ class pge_anim_img:
         display.blit(rotated_image, new_rect.topleft)
 
     def draw(self, display, pos):
+        self.current_img.set_colorkey(self.colorkey)
         display.blit(self.current_img, pos)
 
 
@@ -229,6 +230,7 @@ class pge_rigidbody2d:
             "down" : 0
         }
         self.vel = [0, 0]
+        self.rects = []
 
     def update(self, move_speed, tiles=None):
         movement = [move_speed * (self.movement["right"] - self.movement["left"]),  move_speed * (self.movement["down"] - self.movement["up"])]
@@ -240,6 +242,7 @@ class pge_rigidbody2d:
             "up" : 0,
             "down" : 0
         }
+        self.rects = tiles
 
         self.rect.x += f_movement[0]
         if tiles != None:
@@ -275,11 +278,21 @@ class pge_rigidbody2d:
         new_rect = pg.Rect(self.rect.x - offset[0], self.rect.y - offset[1], self.rect.w, self.rect.h)
         pg.draw.rect(display, (255, 255, 255), new_rect, width=1)
 
+        rr = self.rects
+        for i in rr:
+            i.x -= offset[0]
+            i.y -= offset[1]
+        for i in rr:
+            pg.draw.rect(display, (255, 255, 255), i, width=1)
+
+
 
 NEIGHBORING_TILES = [
-    (-1, 1), (0, 1),  (1, 1),
-    (-1, 0), (0, 0),  (1, 0),
-    (-1,-1), (0,-1),  (1,-1)
+    (-2, 2), (-1, 2), (0, 2),  (1, 2), (2, 2),
+    (-2, 1), (-1, 1), (0, 1),  (1, 1), (2, 1),
+    (-2, 0), (-1, 0), (0, 0),  (1, 0), (2, 0),
+    (-2,-1), (-1,-1), (0,-1),  (1,-1), (2,-1),
+    (-2,-2), (-1,-2), (0,-2),  (1,-2), (2,-2)
 ]
 PHYSICS_TILES = {'1', '2', '3', '4'}
 
@@ -310,6 +323,19 @@ class pge_lvl:
                 x_pos += 1
             y_pos += 1
 
+    def get_enemy_pos(self, enemy_tile_num):
+        positions = []
+        y_pos = 0
+        for y in self.lvl:
+            x_pos = 0
+            for x in y:
+                if x == str(enemy_tile_num):
+                    positions.append([x_pos * self.tile_size, y_pos * self.tile_size]) 
+                x_pos += 1
+            y_pos += 1
+        return positions
+
+
     def get_tiles_around(self, pos):
         tiles = []
         n_pos = [int(pos[0] // self.tile_size), int(pos[1] // self.tile_size)]
@@ -335,6 +361,7 @@ class pge_lvl:
                 loc = str(x) + ";" + str(y) 
                 if loc in self.tilemap:
                     t = self.tilemap[loc]
+                    rect = pg.Rect(t['pos'][0] * self.tile_size - scroll[0], t['pos'][1] * self.tile_size - scroll[1], 32, 32)
                     display.blit(self.tile_images[t['type']], (t['pos'][0] * self.tile_size - scroll[0], t['pos'][1] * self.tile_size - scroll[1])) 
 
 def load_map(path):

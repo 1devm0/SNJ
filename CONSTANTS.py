@@ -8,9 +8,9 @@ DISPLAY_SIZE = (640, 360)
 
 PLAYER_IMG_FOLDER = "res/player/"
 PLAYER_STATES = 3
-PLAYER_STATE_LIST = [("idle", 2), ("run", 2), ("jump", 1)]
-PLAYER_IMG_COLORKEY = (128, 128, 128, 255)
-PLAYER_SIZE = (16, 16)
+PLAYER_STATE_LIST = [("idle", 2), ("run", 6), ("jump", 1)]
+PLAYER_IMG_COLORKEY = (158, 158, 158, 255)
+PLAYER_SIZE = (18, 32)
 PLAYER_MOVE_SPEED = 200 * 1.25
 
 PLAYER_KEYS = {
@@ -21,4 +21,11 @@ PLAYER_KEYS = {
     str(pg.K_LEFT) : "left",
     str(pg.K_DOWN) : "down"
 }
+
+ENEMY_0_IMG_FOLDER = "res/enemy_0/"
+ENEMY_0_STATES = 1
+ENEMY_0_STATE_LIST = [("idle", 2)]
+ENEMY_0_SIZE = (40, 40)
+ENEMY_0_MOVE_SPEED = 50
+
 

@@ -1,0 +1,54 @@
+- Fix hitboxes and bugs with animation
+- Fix framework and animation system
+- Copy old SDL framework
+- Make game more attractive with glow
+- Implement a cleaner screenshake
+- Clean up the code 
+- Implement background:
+    - Parallax clouds 
+    - Day & Night Cycle
+- Implement game art:
+    - player
+    - level
+- Abilities:
+    - Implement sparks and sound effects for creating abilities
+    - Implement sound effect and better visuals for dash
+    - Melee combos: 
+        - Simple visuals
+        - Combos
+        - Black flash if you hit an enemy 10 times consecutively in a timer
+        - Sound effect
+        - Shockwaves
+    - Red:
+        - Depending on radius is the amount of enemies/tiles you destroy
+        - Depending on stamina charge is the amount red lasts
+        - Blue can also explode with particles with sound
+        - Shockwaves
+    - Blue:
+        - Depending on radius is the amount of enemies you attract 
+        - Depending on stamina charge is the amount blue lasts
+        - Blue can also explode with particles with sound
+        - Shockwaves
+    - Neutral Infinity:
+        - Turn it on around you and crush enemies into corners
+        - Flying Gojo
+        - Shockwaves
+        - Teleport
+    - Domain Expansion:
+        - Fry enemy brains
+    - Purple???
+    - Ability timeouts??
+- Implement basic enemies with health
+
+- General:
+    - Implement saving:
+        - player state
+        - level state:
+            - enemies
+            - tiles
+    - Create game art
+    - Implement game cutscenes
+    - Debug stuff
+    - Input remapping
+    - Level editor
+    - Debug menu / stats for certain abilities and stuff
