@@ -232,7 +232,7 @@ class pge_rigidbody2d:
         self.vel = [0, 0]
         self.rects = []
 
-    def update(self, move_speed, tiles=None):
+    def update(self, move_speed, tiles=None, gravity=1):
         movement = [move_speed * (self.movement["right"] - self.movement["left"]),  move_speed * (self.movement["down"] - self.movement["up"])]
         f_movement = (movement[0] + self.vel[0], movement[1] + self.vel[1])
 
@@ -268,7 +268,8 @@ class pge_rigidbody2d:
                         self.rect.top = tile.bottom
                         collision_types["up"] = True
            
-        self.vel[1] = min(8, self.vel[1] + 0.5)
+        if gravity:
+            self.vel[1] = min(8, self.vel[1] + 0.5)
         self.collision = collision_types
 
         if self.collision["down"] or self.collision["up"]:

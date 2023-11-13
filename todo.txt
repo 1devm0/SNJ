@@ -1,54 +1,66 @@
-- Fix hitboxes and bugs with animation
-- Fix framework and animation system
+- Clean code
 - Copy old SDL framework
-- Make game more attractive with glow
-- Implement a cleaner screenshake
-- Clean up the code 
-- Implement background:
-    - Parallax clouds 
-    - Day & Night Cycle
-- Implement game art:
-    - player
-    - level
-- Abilities:
-    - Implement sparks and sound effects for creating abilities
-    - Implement sound effect and better visuals for dash
-    - Melee combos: 
-        - Simple visuals
-        - Combos
-        - Black flash if you hit an enemy 10 times consecutively in a timer
-        - Sound effect
-        - Shockwaves
-    - Red:
-        - Depending on radius is the amount of enemies/tiles you destroy
-        - Depending on stamina charge is the amount red lasts
-        - Blue can also explode with particles with sound
-        - Shockwaves
-    - Blue:
-        - Depending on radius is the amount of enemies you attract 
-        - Depending on stamina charge is the amount blue lasts
-        - Blue can also explode with particles with sound
-        - Shockwaves
-    - Neutral Infinity:
-        - Turn it on around you and crush enemies into corners
-        - Flying Gojo
-        - Shockwaves
-        - Teleport
-    - Domain Expansion:
-        - Fry enemy brains
-    - Purple???
-    - Ability timeouts??
-- Implement basic enemies with health
-
-- General:
-    - Implement saving:
-        - player state
-        - level state:
-            - enemies
-            - tiles
-    - Create game art
-    - Implement game cutscenes
-    - Debug stuff
-    - Input remapping
-    - Level editor
-    - Debug menu / stats for certain abilities and stuff
+- Implement game screens:
+    - Menu: 
+        - Play
+        - Level Screen
+        - Settings
+            - Input remapping
+            - Graphics settings
+            - Sound  
+            - Level editor
+    - Main Game:
+        - Level failed
+        - Level complete:
+            - Player stats
+    - Game end
+- Enemies:
+    - different art
+    - semi-grade 1: 100 health 
+        - follow and melee attacks
+    - grade 1: 200 health
+        - follow and stronger melee attacks
+    - special grade 1: 350 health
+        - follow, melee, and Shooting
+    - special grade : 1000 health 
+        - final boss in each level 
+            - special cinematography
+            - complex behaviours
+- More Levels
+- Types of objectives for each level: 
+    - Reach x_pos in n_time (Parkour level)
+    - Kill all the cursed enemies
+    - Get all the cursed object
+    - Protect n (Open-level)
+- Implement abilities:
+    - Neutral infinity
+    - Flying
+    - Melee:
+        - Punches: knockback
+        - Kicks: knockback
+        - Upper launch enemies into air
+        - Kick enemies down
+        - Combos charge stamina and meter for cursed energy
+    - Total 10 slots of cursed energy
+    - Red & Blue & Healing use 1 slot:
+        - Red : repels enemies and compression
+        - Blue : attracts enemies and compression
+        - RCT : Heals people
+    - Black Flash Mode or Purple use 5 slots:
+        - Cinematic mode
+        - 1 punch man 
+        - Last longer depending on enemies killed
+    - Domain Expansion uses 8 slots
+- Polishing:
+    - Sound effects for melee, purple, blue, red
+    - Sparks & Particles for creating abilities or using them
+    - Shockwaves for purple and red and blue 
+    - Better visuals for dashing
+    - Timer in levels
+    - Fix hitboxes and bugs with animation system
+    - Parallax art for background, day and night cycle
+    - Glow & Shaders
+- Implement saving
+    - player kills
+    - player position in the level
+    - player time
