@@ -1,66 +1,69 @@
-- Clean code
-- Copy old SDL framework
-- Implement game screens:
-    - Menu: 
-        - Play
-        - Level Screen
-        - Settings
-            - Input remapping
-            - Graphics settings
-            - Sound  
-            - Level editor
-    - Main Game:
-        - Level failed
-        - Level complete:
-            - Player stats
-    - Game end
-- Enemies:
-    - different art
-    - semi-grade 1: 100 health 
-        - follow and melee attacks
-    - grade 1: 200 health
-        - follow and stronger melee attacks
-    - special grade 1: 350 health
-        - follow, melee, and Shooting
-    - special grade : 1000 health 
-        - final boss in each level 
-            - special cinematography
-            - complex behaviours
-- More Levels
-- Types of objectives for each level: 
-    - Reach x_pos in n_time (Parkour level)
-    - Kill all the cursed enemies
-    - Get all the cursed object
-    - Protect n (Open-level)
-- Implement abilities:
-    - Neutral infinity
-    - Flying
+- Done/Meh
+    - Clean code
+    - Copy old SDL framework
+
+- Cancelled:
     - Melee:
         - Punches: knockback
         - Kicks: knockback
         - Upper launch enemies into air
         - Kick enemies down
         - Combos charge stamina and meter for cursed energy
-    - Total 10 slots of cursed energy
-    - Red & Blue & Healing use 1 slot:
-        - Red : repels enemies and compression
-        - Blue : attracts enemies and compression
-        - RCT : Heals people
-    - Black Flash Mode or Purple use 5 slots:
-        - Cinematic mode
-        - 1 punch man 
-        - Last longer depending on enemies killed
-    - Domain Expansion uses 8 slots
-- Polishing:
-    - Sound effects for melee, purple, blue, red
-    - Sparks & Particles for creating abilities or using them
-    - Shockwaves for purple and red and blue 
-    - Better visuals for dashing
-    - Timer in levels
-    - Fix hitboxes and bugs with animation system
-    - Parallax art for background, day and night cycle
-    - Glow & Shaders
-- Implement saving
-    - player kills
-    - player position in the level
-    - player time
+
+- Not Done
+    - More Levels & a level editor
+    - Implement abilities:
+        - Neutral infinity
+        - Flying
+        - Total 10 slots of cursed energy
+        - Red & Blue & Healing use 1 slot:
+            - Red : repels enemies and compression
+            - Blue : attracts enemies and compression
+            - RCT : Heals people
+        - Black Flash Mode or Purple use 5 slots:
+            - Cinematic mode
+            - 1 punch man 
+            - Last longer depending on enemies killed
+        - Domain Expansion uses 8 slots   
+    - Enemies:
+        - different art
+        - semi-grade 1: 100 health 
+            - follow and melee attacks
+        - grade 1: 200 health
+            - follow and stronger melee attacks
+        - special grade 1: 350 health
+            - follow, melee, and Shooting
+        - special grade : 1000 health 
+            - final boss in each level 
+                - special cinematography
+                - complex behaviours
+    - Types of objectives for each level: 
+        - Reach x_pos in n_time (Parkour level)
+        - Kill all the cursed enemies
+        - Get all the cursed object
+        - Protect n (Open-level)
+        - Game screens:
+            - level failed
+            - level complete: player stats
+    - Polishing:
+        - Sound effects for melee, purple, blue, red
+        - Sparks & Particles for creating abilities or using them
+        - Shockwaves for purple and red and blue 
+        - Better visuals for dashing
+        - Timer in levels
+        - Fix hitboxes and bugs with animation system
+        - Parallax art for background, day and night cycle
+        - Glow & Shaders
+     - Implement game screens:
+        - Menu: 
+            - Play
+            - Level Screen
+            - Settings
+                - Input remapping
+                - Graphics settings
+                - Sound  
+        - Game end       
+    - Implement saving
+        - player kills
+        - player position in the level
+        - player time

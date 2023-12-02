@@ -45,6 +45,10 @@ class Game:
         self.player.update(self)
         for i in self.enemies:
             i[0].update(ENEMY_0_MOVE_SPEED * self.window.dt, self.lvl.phys_rects_around((i[0].rect.x, i[0].rect.y)))
+        for i in range(0, len(self.enemies) - 1):
+            if self.player.hitbox.colliderect(self.enemies[i][0].rect):
+                print("colision", self.enemies[i][1])
+                self.enemies[i][1] -= 8
         self.enemy_img.update(self.window.dt, "idle", 0)
 
     def render(self):
@@ -64,7 +68,6 @@ class Game:
             pg.draw.rect(self.display, (255, 50, 50), pg.Rect(i[0].rect.x - self.player.scroll[0], i[0].rect.y - self.player.scroll[1] - 10, i[1], 5))
 
         self.player.render(self)
-
 
         self.fader.draw(self.display, (0, 0), self.window.dt, 255)
         self.window.draw(self.display, (0, 0), 1)

@@ -22,6 +22,8 @@ class player:
         self.particles = []
         self.flip = 0
         self.state = "idle"
+        self.attk_counter = 0
+        self.hitbox = pg.Rect(10, 10, 5, 5)
 
     def set_initial_lvl_pos(self, pos):
         self.initial_lvl_pos = pos
@@ -42,6 +44,8 @@ class player:
                     self.after_images_pos.clear()
                 if e.key == pg.K_r:
                     self.body.rect.x, self.body.rect.y = self.initial_lvl_pos
+                if e.key == pg.K_e:
+                    self.state = "attk_0"
             if e.type == pg.KEYUP:
                 if str(e.key) in PLAYER_KEYS:
                     self.body.movement[PLAYER_KEYS[str(e.key)]] = 0
@@ -51,6 +55,7 @@ class player:
             if e.type == pg.MOUSEBUTTONUP:
                 if e.button == 1:
                     self.lmbtn_down = 0
+
         return 1
 
     def update(self, game_state):
@@ -122,7 +127,24 @@ class player:
         
         if self.body.vel[1] < 0:
             self.jump_timer += 1
-        
+
+        if self.state == "attk_0":
+            self.img.framerate = 2
+            if self.img.current_frame == len(self.img.animated_imgs["attk_0"]) - 1:
+                self.state = "idle"
+                self.img.framerate = 2
+            else:
+                if self.flip:
+                    self.body.rect.x -= 1
+                    for i in game_state.lvl.phys_rects_around((self.body.rect.x, self.body.rect.y)):
+                        if i.colliderect(self.body.rect):
+                            self.body.rect.x += 1 
+                else:
+                    self.body.rect.x += 1
+                    for i in game_state.lvl.phys_rects_around((self.body.rect.x, self.body.rect.y)):
+                        if i.colliderect(self.body.rect):
+                            self.body.rect.x -= 1 
+
         self.body.update(PLAYER_MOVE_SPEED * self.dash_multiplier * game_state.window.dt, game_state.lvl.phys_rects_around((self.body.rect.x, self.body.rect.y)))
 
         if self.body.collision["down"]:
@@ -135,17 +157,17 @@ class player:
         if self.body.movement["left"]:
             self.flip = 1
         
-        if (self.body.movement["right"] or self.body.movement["left"]) and self.body.collision["down"]:
+        if (self.body.movement["right"] or self.body.movement["left"]) and self.body.collision["down"] and "attk_" not in self.state:
             self.state = "run"
             self.img.framerate = 6
             self.body.rect.w = 28
         else:
-            if self.body.collision["down"]:
+            if self.body.collision["down"]  and "attk_" not in self.state:
                 self.state = "idle"
                 self.img.framerate = 14
                 self.body.rect.w = 18
             
-        if self.body.vel[1] < 0 and self.body.collision["down"] != True:
+        if self.body.vel[1] < 0 and self.body.collision["down"] != True  and "attk_" not in self.state:
             self.state = "jump"
             self.img.framerate = 300
 
@@ -159,7 +181,6 @@ class player:
             i_y = self.body.rect.y
             for l in range(10, 20):
                 self.particles.append(pge_circle((81, 45, 168), [i_x + random.randint(-1, 1) * l, i_y  + random.randint(-1, 1) * l], random.randint(3, 6)))
-
 
     def render(self, game_state):
         for i in range(0, len(self.after_images_pos) - 1):
@@ -176,6 +197,17 @@ class player:
         self.img.draw(game_state.display, (self.body.rect.x - self.scroll[0], self.body.rect.y - self.scroll[1]))
         self.body.dbg_draw(game_state.display, self.scroll)
         self.ability.draw(game_state.display, self.scroll)
+        scrolled_hitbox = None
+        if not self.flip:
+            self.hitbox.x = self.body.rect.x + self.body.rect.w + 8
+            self.hitbox.y = self.body.rect.y + 8
+        else:
+            self.hitbox.x = self.body.rect.x
+            self.hitbox.y = self.body.rect.y + 8
+        scrolled_hitbox = self.hitbox
+        scrolled_hitbox.x -= self.scroll[0]
+        scrolled_hitbox.y -= self.scroll[1]
+        pg.draw.rect(game_state.display, (255, 255, 255), scrolled_hitbox)
 
 
 

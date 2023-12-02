@@ -7,8 +7,8 @@ WINDOW_SIZE = (1280, 720)
 DISPLAY_SIZE = (640, 360)
 
 PLAYER_IMG_FOLDER = "res/player/"
-PLAYER_STATES = 3
-PLAYER_STATE_LIST = [("idle", 2), ("run", 6), ("jump", 1)]
+PLAYER_STATES = 5
+PLAYER_STATE_LIST = [("idle", 2), ("run", 6), ("jump", 1), ("attk_0", 6), ("attk_1", 1)]
 PLAYER_IMG_COLORKEY = (158, 158, 158, 255)
 PLAYER_SIZE = (18, 32)
 PLAYER_MOVE_SPEED = 200 * 1.25
